@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Docs Typing App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Type Text to Google Docs</h1>
+    <form id="textForm">
+        <input type="text" id="textInput" name="text" placeholder="Type something..." required>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        $(document).ready(function(){
+            $('#textForm').on('submit', function(event){
+                event.preventDefault();
+                var text = $('#textInput').val();
+                $.ajax({
+                    url: '/type',
+                    type: 'POST',
+                    data: { text: text },
+                    success: function(response){
+                        alert('Text added to Google Doc with ID: ' + response.documentId);
+                    },
+                    error: function(){
+                        alert('Error typing text to Google Doc.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
